@@ -14,7 +14,7 @@ interface ActionTooltipProps {
   align?: "start" | "center" | "end";
 }
 
-const ActionTooltip = ({
+export const ActionTooltip = ({
   label,
   children,
   side,
@@ -23,17 +23,14 @@ const ActionTooltip = ({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={50}>
-        <TooltipTrigger asChild>
-          {children}
-        </TooltipTrigger>
-          <TooltipContent side={side} align={align}>
-            <p className="font-semibold text-sm capitalize">
-              {label.toLowerCase()}
-            </p>
-          </TooltipContent>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent side={side} align={align}>
+          <p className="font-semibold text-sm capitalize">
+            {label.toLowerCase()}
+          </p>
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
 };
 
-export default ActionTooltip;
