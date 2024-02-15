@@ -1,10 +1,11 @@
 "use client";
 
-import axios from "axios";
 import qs from "query-string";
+import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { ChannelType } from "@prisma/client";
 
 import {
   Dialog,
@@ -25,16 +26,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
-import { ChannelType } from "@prisma/client";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue} from "../ui/select";
 
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, {
+  name: z.string().min(1, {
       message: "Channel name is required.",
-    })
-    .refine((name) => name !== "general", {
+    }).refine(name => name !== "general", {
       message: "Channel name cannot be 'general'.",
     }),
   type: z.nativeEnum(ChannelType),
@@ -119,7 +121,7 @@ export const CreateChannelModal = () => {
                     <FormLabel>Channel Type</FormLabel>
                     <Select
                       disabled={isLoading}
-                      onOpenChange={field.onChange}
+                      onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
